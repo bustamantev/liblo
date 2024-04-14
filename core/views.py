@@ -25,3 +25,10 @@ def registro(request):
 
 def sesion(request):
     return render(request, 'core/sesion.html')
+
+def recuperarcontrasena(request):
+    return render(request, 'core/recuperarcontrasena.html')
+
+def modificarperfil(request):
+    return render(request, 'core/modificarperfil.html')
+
