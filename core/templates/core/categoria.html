@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content d-flex align-items-center justify-content-center">
+  <div class="container">
+    <div class="row justify-content-center g-3">
+      {% for tarjeta in tarjetas %}
+        {% include 'core/card.html' with tarjeta=tarjeta %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
