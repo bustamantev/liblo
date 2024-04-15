@@ -10,4 +10,7 @@ urlpatterns = [
     path('psicologia/', psicologia, name="psicologia"),
     path('registro/', registro, name="registro"),
     path('sesion/', sesion, name="sesion"),
+    path('recuperacion/', recuperacion, name="recuperacion"),
+    path('modificacion/', modificacion, name="modificacion"),
+    
 ]

@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-# TAREA PENDIENTE: Conectar datos a la base de datos SQLite
-
 NOMBRE_DEL_SITIO = 'Librotek'
 
 def titulo(subtitulo=None):
@@ -147,5 +145,22 @@ def sesion(request):
         {
             'titulo': titulo('Sesion'),
             'subtitulo': 'Sesion'
+        }
+    )
+
+          
+def recuperacion(request):
+    return render(request, 'core/recuperacion.html',
+        {
+            'titulo': titulo('Recuperacion'),
+            'subtitulo': 'Recuperacion'
+        }
+    )
+
+def modificacion(request):
+    return render(request, 'core/modificacion.html',
+        {
+            'titulo': titulo('Modificacion'),
+            'subtitulo': 'Modificacion'
         }
     )
