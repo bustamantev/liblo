@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Perfil
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 NOMBRE_DEL_SITIO = 'Librotek'
 
@@ -164,3 +167,74 @@ def modificacion(request):
             'subtitulo': 'Modificacion'
         }
     )
+
+@login_required
+def crear_perfil(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        apellido = request.POST.get('apellido')
+        fecha_nacimiento = request.POST.get('fecha_nacimiento')
+        nombre_usuario = request.POST.get('nombre_usuario')
+        email = request.POST.get('email')
+        contrasena = request.POST.get('contrasena')
+        direccion = request.POST.get('direccion')
+
+        # Crear un nuevo usuario en el modelo User
+        user = User.objects.create_user(username=nombre_usuario, email=email, password=contrasena)
+
+        # Crear un nuevo perfil asociado al usuario
+        perfil = Perfil.objects.create(
+            usuario=user,
+            nombre=nombre,
+            apellido=apellido,
+            fecha_nacimiento=fecha_nacimiento,
+            nombre_usuario=nombre_usuario,
+            email=email,
+            contrasena=contrasena,
+            direccion=direccion
+        )
+
+        return redirect('lista_usuarios')
+    return render(request, 'core/crear_perfil.html')
+
+# Vista para listar todos los usuarios
+@login_required
+def lista_usuarios(request):
+    usuarios = User.objects.all()
+    perfiles = Perfil.objects.all()
+    context = {
+        'usuarios': usuarios,
+        'perfiles': perfiles
+    }
+    return render(request, 'core/lista_usuarios.html', context)
+
+# Vista para actualizar un perfil
+@login_required
+def actualizar_perfil(request, pk):
+    perfil = get_object_or_404(Perfil, pk=pk)
+    if request.method == 'POST':
+        perfil.nombre = request.POST.get('nombre')
+        perfil.apellido = request.POST.get('apellido')
+        perfil.fecha_nacimiento = request.POST.get('fecha_nacimiento')
+        perfil.nombre_usuario = request.POST.get('nombre_usuario')
+        perfil.email = request.POST.get('email')
+        perfil.contrasena = request.POST.get('contrasena')
+        perfil.direccion = request.POST.get('direccion')
+        perfil.save()
+        return redirect('lista_usuarios')
+    context = {
+        'perfil': perfil
+    }
+    return render(request, 'core/actualizar_perfil.html', context)
+
+# Vista para eliminar un perfil
+@login_required
+def eliminar_perfil(request, pk):
+    perfil = get_object_or_404(Perfil, pk=pk)
+    if request.method == 'POST':
+        perfil.delete()
+        return redirect('lista_usuarios')
+    context = {
+        'perfil': perfil
+    }
+    return render(request, 'core/eliminar_perfil.html', context)
