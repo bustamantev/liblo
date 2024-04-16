@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Perfil
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import authenticate, login,logout
+from .forms import RegistroFormulario
+
 
 NOMBRE_DEL_SITIO = 'Librotek'
 
@@ -168,34 +172,22 @@ def modificacion(request):
         }
     )
 
-@login_required
-def crear_perfil(request):
+def registro(request):
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        apellido = request.POST.get('apellido')
-        fecha_nacimiento = request.POST.get('fecha_nacimiento')
-        nombre_usuario = request.POST.get('nombre_usuario')
-        email = request.POST.get('email')
-        contrasena = request.POST.get('contrasena')
-        direccion = request.POST.get('direccion')
-
-        # Crear un nuevo usuario en el modelo User
-        user = User.objects.create_user(username=nombre_usuario, email=email, password=contrasena)
-
-        # Crear un nuevo perfil asociado al usuario
-        perfil = Perfil.objects.create(
-            usuario=user,
-            nombre=nombre,
-            apellido=apellido,
-            fecha_nacimiento=fecha_nacimiento,
-            nombre_usuario=nombre_usuario,
-            email=email,
-            contrasena=contrasena,
-            direccion=direccion
-        )
-
-        return redirect('lista_usuarios')
-    return render(request, 'core/crear_perfil.html')
+        form = RegistroFormulario(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data['nombre_usuario'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['contrasena']
+            )
+            perfil = form.save(commit=False)
+            perfil.usuario = user
+            perfil.save()
+            return redirect('lista_usuarios')
+    else:
+        form = RegistroFormulario()
+    return render(request, 'core/registro.html', {'form': form})
 
 # Vista para listar todos los usuarios
 @login_required
