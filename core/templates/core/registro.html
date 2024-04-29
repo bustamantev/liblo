@@ -1,0 +1,133 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content d-flex align-items-center justify-content-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <div class="card-body">
+          <form id="registroForm" method="POST" action="{% url 'registro' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre y apellido:</label>
+              <input type="text" name="nombre" class="form-control" id="nombre">
+              <small class="text-danger" id="nombre-error"></small>
+            </div>
+            <div class="mb-3">
+              <label for="fechanac" class="form-label">Fecha de nacimiento:</label>
+              <input type="date" name="fecha_nacimiento" class="form-control" id="fechanac">
+              <small class="text-danger" id="fechanac-error"></small>
+            </div>
+            <div class="mb-3">
+              <label for="usuario" class="form-label">Nombre de usuario:</label>
+              <input type="text" name="nombre_usuario" class="form-control" id="usuario">
+              <small class="text-danger" id="usuario-error"></small>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" id="email">
+              <small class="text-danger" id="email-error"></small>
+            </div>
+            <div class="mb-3">
+              <label for="contrasena" class="form-label">Contraseña</label>
+              <input type="password" name="contrasena" class="form-control" id="contrasena">
+              <small class="text-danger" id="contrasena-error"></small>
+            </div>
+            <div class="mb-3">
+              <label for="contrasenavalidacion" class="form-label">Repetir contraseña</label>
+              <input type="password" name="contrasenavalidacion" class="form-control" id="contrasenavalidacion">
+              <small class="text-danger" id="contrasenavalidacion-error"></small>
+            </div>
+            <div class="mb-3">
+              <label for="direccion" class="form-label">Dirección:</label>
+              <input type="text" name="direccion" class="form-control" id="direccion">
+              <small class="text-danger" id="direccion-error"></small>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-dark">Guardar</button>
+              <br>
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/core/js/jquery-3.7.1.min.js"></script>
+<script>
+  $(document).ready(function(){
+  $('#registroForm').submit(function(event){
+      event.preventDefault();
+      $('#nombre-error').text('');
+      $('#fechanac-error').text('');
+      $('#usuario-error').text('');
+      $('#email-error').text('');
+      $('#contrasena-error').text('');
+      $('#contrasenavalidacion-error').text('');
+      $('#direccion-error').text('');
+
+      var nombre = $('#nombre').val();
+      var fechanac = $('#fechanac').val();
+      var usuario = $('#usuario').val();
+      var email = $('#email').val();
+      var contrasena = $('#contrasena').val();
+      var contrasenavalidacion = $('#contrasenavalidacion').val();
+      var direccion = $('#direccion').val();
+
+      if(nombre === '') {
+          $('#nombre-error').text('Por favor ingresa tu nombre');
+          return;
+      }
+      if(fechanac === '') {
+          $('#fechanac-error').text('Por favor ingresa tu fecha de nacimiento');
+          return;
+      }
+      if(usuario === '') {
+          $('#usuario-error').text('Por favor ingresa tu nombre de usuario');
+          return;
+      }
+      if(email === '') {
+          $('#email-error').text('Por favor ingresa tu email');
+          return;
+      }
+      if(contrasena === '') {
+          $('#contrasena-error').text('Por favor ingresa una contraseña');
+          return;
+      }
+
+      // Validacion de contraseña
+      var passPattern = /^(?=.*\d)(?=.*[A-Z]).{6,18}$/;
+      if(!passPattern.test(contrasena)) {
+          $('#contrasena-error').text('La contraseña debe contener al menos un número y una letra en mayúscula, y tener entre 6 y 18 caracteres');
+          return;
+      }
+
+      // Validar que las contraseñas coincidan
+      if(contrasena !== contrasenavalidacion) {
+          $('#contrasenavalidacion-error').text('Las contraseñas no coinciden');
+          return;
+      }
+
+      // Validar que la persona sea mayor de  13 años
+      var today = new Date();
+      var birthDate = new Date(fechanac);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+      }
+      if (age < 13) {
+          $('#fechanac-error').text('Debes tener al menos 13 años para registrarte');
+          return;
+      }
+      this.submit();
+  });
+});
+</script>
+{% endblock %}
