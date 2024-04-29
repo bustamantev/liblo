@@ -1,23 +1,27 @@
-"""
-URL configuration for librotek project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls'),)
+    path('', include('core.urls'),),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/signup/', views.signup, name="signup"),
+    path('lista/usuarios/', views.lista_usuarios, name="userlist"),
+    path('form-usuario/', views.crear_usuario, name="userform"),
+    path('modificar-usuario/<int:usuario_id>/', views.modificar_usuario, name='modificar-usuario'),
+    path('eliminar-usuario/<int:usuario_id>/', views.eliminar_usuario, name='eliminar-usuario'),
+    path('lista/libros/', views.lista_libros, name="booklist"),
+    path('form-libro/', views.crear_libro, name="bookform"),
+    path('modificar-libro/<int:libro_id>/', views.modificar_libro, name='modificar-libro'),
+    path('eliminar-libro/<int:libro_id>/', views.eliminar_libro, name='eliminar-libro'),
+    path('historia/', views.historia, name="historia"),
+    path('fantasia/', views.fantasia, name="fantasia"),
+    path('manuales/', views.manuales, name="manuales"),   
+    path('novelas/', views.novelas, name="novelas"),
+    path('psicologia/', views.psicologia, name="psicologia"),
+    path('api/', include('api_rest.urls')),
+    # URLS incluidas:  /api/categorias/ y /api/libros/
 ]
