@@ -22,6 +22,9 @@ urlpatterns = [
     path('manuales/', views.manuales, name="manuales"),   
     path('novelas/', views.novelas, name="novelas"),
     path('psicologia/', views.psicologia, name="psicologia"),
+<<<<<<< HEAD
     path('api/', include('api_rest.urls')),
     # URLS incluidas:  /api/categorias/ y /api/libros/
+=======
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 ]

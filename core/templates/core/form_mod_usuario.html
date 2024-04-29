@@ -5,6 +5,7 @@
     <form method="post">
         {% csrf_token %}
         <div class="mb-3">
+<<<<<<< HEAD
             <label class="form-label" for="{{ form.username.id_for_label }}">Username:</label>
             {{ form.username }}
             {% for error in form.username.errors %}
@@ -12,6 +13,8 @@
             {% endfor %}
         </div>
         <div class="mb-3">
+=======
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
             <label class="form-label" for="{{ form.first_name.id_for_label }}">First Name:</label>
             {{ form.first_name }}
             {% for error in form.first_name.errors %}
@@ -53,6 +56,7 @@
             <p class="text-danger">{{ error }}</p>
             {% endfor %}
         </div>
+<<<<<<< HEAD
         <div class="mb-3">
             <label class="form-label" for="{{ form.password.id_for_label }}">Password:</label>
             {{ form.password }}
@@ -60,6 +64,8 @@
             <p class="text-danger">{{ error }}</p>
             {% endfor %}
         </div>
+=======
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
     </form>
 </div>

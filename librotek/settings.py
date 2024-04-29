@@ -83,6 +83,7 @@ DATABASES = {
     }
 }
 
+<<<<<<< HEAD
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.oracle',
@@ -98,6 +99,8 @@ DATABASES = {
 # }
 
 
+=======
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

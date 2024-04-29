@@ -13,7 +13,11 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
+<<<<<<< HEAD
 					<a class="nav-link active mx2" aria-current="page" href="/">Hola {{ username }}{{ subtitulo }}</a>
+=======
+					<a class="nav-link active mx2" aria-current="page" href="/">{{ subtitulo }}</a>
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 				</li>
 				{% if not request.user.is_authenticated %}
 				<li class="nav-item">
@@ -21,6 +25,7 @@
 				</li>
 				<a class="nav-link" href="/accounts/login/">Iniciar sesion</a>
 				{% endif %}
+<<<<<<< HEAD
 				{% if perms.core.change_customuser %}
 				<li class="nav-item">
 					<a class="nav-link" href="/modificar-usuario/{{ request.user.id }}/"> Perfil </a>
@@ -38,6 +43,20 @@
 				</li>
 				{% endif %} 
 				{% if request.user.is_authenticated %}
+=======
+				<li class="nav-item"></li>
+				{% if request.user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link" href="/modificar-usuario/{{ request.user.id }}/"> Perfil </a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/lista/libros/">Lista de libros</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/lista/usuarios/">Lista de usuarios</a>
+				</li>
+				{% endif %} {% if request.user.is_authenticated %}
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Categorías </a>
 					<ul class="dropdown-menu">
@@ -58,9 +77,12 @@
 						</li>
 					</ul>
 				</li>
+<<<<<<< HEAD
 				<li class="nav-item">
 					<a class="nav-link" href="/api/catalogo-libros/">Catálogo de libros por encargo</a>
 				</li>
+=======
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 				<a class="nav-link" href="/accounts/logout/">Cerrar sesion</a>
 				{% endif %}
 			</ul>

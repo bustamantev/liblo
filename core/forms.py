@@ -1,4 +1,5 @@
 from django import forms
+<<<<<<< HEAD
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -58,3 +59,11 @@ class LibroModificacionForm(forms.ModelForm):
 
 
 
+=======
+from .models import Perfil
+
+class RegistroFormulario(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['nombre_completo', 'fecha_nacimiento', 'nombre_usuario', 'email', 'contrasena', 'direccion']
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a

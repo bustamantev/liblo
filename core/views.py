@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http.response import HttpResponse
 from .forms import SignupForm, LibroForm, LibroModificacionForm, CustomUserForm, CustomUserModificacionForm
 from .models import CategoriaLibro, Libro, CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+=======
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import authenticate, login,logout
+from .forms import RegistroFormulario
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 
 
 NOMBRE_DEL_SITIO = 'Librotek'
@@ -53,6 +60,7 @@ def novelas(request):
     libros = Libro.objects.filter(categoria=categoria_novelas)
     return render(request, 'core/categoria.html', {'libros': libros})
 
+<<<<<<< HEAD
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -64,6 +72,44 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 @permission_required('core.view_customuser')
+=======
+          
+def recuperacion(request):
+    return render(request, 'core/recuperacion.html',
+        {
+            'titulo': titulo('Recuperacion'),
+            'subtitulo': 'Recuperacion'
+        }
+    )
+
+def modificacion(request):
+    return render(request, 'core/modificacion.html',
+        {
+            'titulo': titulo('Modificacion'),
+            'subtitulo': 'Modificacion'
+        }
+    )
+
+def registro(request):
+    if request.method == 'POST':
+        form = RegistroFormulario(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data['nombre_usuario'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['contrasena']
+            )
+            perfil = form.save(commit=False)
+            perfil.usuario = user
+            perfil.save()
+            return redirect('lista_usuarios')
+    else:
+        form = RegistroFormulario()
+    return render(request, 'core/registro.html', {'form': form})
+
+# Vista para listar todos los usuarios
+@login_required
+>>>>>>> da007479b86306d610970e752d172c7b3ad0e87a
 def lista_usuarios(request):
     order_by = request.GET.get('order_by', 'username')
     order_dir = request.GET.get('order_dir', 'asc')
